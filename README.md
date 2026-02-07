@@ -1,50 +1,59 @@
-#Client Work: Event Analysis Pipeline
+# Client Work: Event Analysis Pipeline
 
-This project is a small, practical tool that takes a CSV file containing event records and turns it into clear summary tables you can use immediately.
+A small, practical **data pipeline** that takes a recurring events CSV and outputs clean summary tables you can use immediately for reporting.
 
-It was built for a real client workflow where the same type of dataset arrives repeatedly (monthly / weekly), and the goal is to reduce manual counting and keep outputs consistent over time—even when new event types appear.
+Built for a real client workflow where the same type of dataset arrives repeatedly (monthly/weekly). The key constraint: **input categories evolve** (new event types appear), but reporting outputs must remain consistent over time.
 
-WHAT THIS TOOL DOES
-- Reads event data from a CSV file
-- Groups events by Department
-- Counts occurrences by Event Category and Event Type
-- Automatically detects new event types and includes them in the output
-- Exports clean CSV summary tables ready for Excel or Google Sheets
+---
 
-INPUT REQUIREMENTS
-Your CSV file must contain the following columns:
-- DEPARTAMENTO
-- MUNICIPIO
-- CATEGORIA DEL EVENTO
-- TIPO DE EVENTO
-- DESCRIPCION PRELIMINAR DEL EVENTO
+## Overview
 
-OUTPUT FILES
-1. tabla_categorias_por_departamento.csv
-   Counts of events per department by event category.
+This tool replaces manual spreadsheet counting by automating:
+- dataset cleaning/normalization
+- grouping and aggregation
+- repeatable, spreadsheet-ready summary outputs
 
-2. tabla_tipos_por_departamento.csv
-   Counts of events per department by event type, including any new types found.
+The result is a stable workflow where the pipeline keeps working even as the data changes.
 
-HOW TO RUN
-1. Install dependencies:
-   pip install pandas
+---
 
-2. Run the script:
-   python csv_event_analysis_pipeline.py --input your_file.csv
+## What it does
 
-Optional arguments:
---outdir   Choose output directory
---encoding Specify file encoding (e.g. latin1)
+- Reads event records from a CSV file
+- Cleans/standardizes key fields (basic normalization suitable for reporting)
+- Groups events by **DEPARTAMENTO** (and optionally MUNICIPIO if extended later)
+- Produces two output tables:
+  1) counts by **CATEGORIA DEL EVENTO** per department  
+  2) counts by **TIPO DE EVENTO** per department (auto-includes new types)
+- Exports clean CSV summary tables ready for Excel / Google Sheets
 
-EXAMPLE
-python csv_event_analysis_pipeline.py --input "Clean data for this month(Sheet1).csv" --outdir results --encoding latin1
+---
 
-NOTES
-- New event types are automatically added to outputs.
-- Outputs are UTF-8 encoded and spreadsheet-friendly.
-- This tool produces count-based summaries, not advanced analytics.
+## Inputs
 
-TECHNOLOGIES
-Python 3
-Pandas
+Your CSV must contain the following columns:
+
+- `DEPARTAMENTO`
+- `MUNICIPIO`
+- `CATEGORIA DEL EVENTO`
+- `TIPO DE EVENTO`
+- `DESCRIPCION PRELIMINAR DEL EVENTO`
+
+---
+
+## Outputs
+
+- `tabla_categorias_por_departamento.csv`  
+  Counts of events per department by event category.
+
+- `tabla_tipos_por_departamento.csv`  
+  Counts of events per department by event type, including any new types found.
+
+---
+
+## How to run
+
+### Install dependency
+```bash
+pip install pandas
+
